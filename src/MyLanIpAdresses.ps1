@@ -51,7 +51,7 @@ $buttonIPv4.Add_Click({
             $infoText = @"
 IPv4 address : $ipAddress
 Netmask : $subnetMask
-Defautl gateway : $gateway
+Default gateway : $gateway
 MAC address : $macAddress
 "@
 
@@ -83,7 +83,7 @@ $buttonIPv6.Add_Click({
             $infoText = @"
 IPv6 address : $ipAddress
 Netmask : $subnetMask
-Defautl gateway : $gateway
+Default gateway : $gateway
 MAC address : $macAddress
 "@
 
