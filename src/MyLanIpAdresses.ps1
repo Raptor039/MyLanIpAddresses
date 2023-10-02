@@ -8,7 +8,7 @@ $form.Height = 200
 $form.AutoScale = $true
 $form.AutoSize = $true
 
-# Create laber to display text
+# Create label to display text
 $label = New-Object Windows.Forms.Label
 $label.Text = "Select a network interface :"
 $label.Location = New-Object Drawing.Point(20, 20)
@@ -69,20 +69,20 @@ $buttonIPv6.Add_Click({
     }
 })
 
-# Obtenir la liste des interfaces réseau avec IPv4
+# Get up/active network interface list (IPv4 or IPv6)
 $networkInterfaces = Get-NetAdapter | Where-Object { $_.Status -eq 'Up' -and $_.MediaType -ne 'Loopback' -and ((Get-NetIPAddress -InterfaceAlias $_.Name -AddressFamily IPv4) -or (Get-NetIPAddress -InterfaceAlias $_.Name -AddressFamily IPv6)) } | Select-Object -ExpandProperty Name
 
-# Ajouter les interfaces au menu déroulant
+# Add interfaces list to ComboBox
 $comboBox.Items.AddRange($networkInterfaces)
 
-# Ajouter les contrôles à la fenêtre
+# Add controls to Window
 $form.Controls.Add($label)
 $form.Controls.Add($comboBox)
 $form.Controls.Add($buttonIPv4)
 $form.Controls.Add($buttonIPv6)
 
-# Afficher la fenêtre
+# Display Window
 $form.ShowDialog()
 
-# Nettoyer la mémoire lorsque la fenêtre est fermée
+# Cleanup memory when window is closed
 $form.Dispose()
