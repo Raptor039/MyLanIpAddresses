@@ -1,28 +1,28 @@
 Add-Type -AssemblyName System.Windows.Forms
 
-# Créer une fenêtre Windows Forms
+# Create Windows Forms Window
 $form = New-Object Windows.Forms.Form
-$form.Text = "Informations IP sur l'interface réseau"
+$form.Text = "IP informations on network interface"
 $form.Width = 600
 $form.Height = 200
 $form.AutoScale = $true
 $form.AutoSize = $true
 
-# Créer une étiquette pour afficher du texte
+# Create laber to display text
 $label = New-Object Windows.Forms.Label
-$label.Text = "Sélectionnez une interface réseau :"
+$label.Text = "Select a network interface :"
 $label.Location = New-Object Drawing.Point(20, 20)
 $label.AutoSize = $true
 
-# Créer un menu déroulant (ComboBox)
+# Create ComboBox
 $comboBox = New-Object Windows.Forms.ComboBox
 $comboBox.Location = New-Object Drawing.Point(20, 50)
 $comboBox.Width = 250
 
-# Bouton pour afficher les informations IPv4
+# Button to display IPv4 informations
 $buttonIPv4 = New-Object Windows.Forms.Button
 $buttonIPv4.Location = New-Object Drawing.Point(20, 100)
-$buttonIPv4.Text = "Afficher les informations IPv4"
+$buttonIPv4.Text = "Show IPv4 informations"
 $buttonIPv4.AutoSize = $true
 $buttonIPv4.Add_Click({
     $selectedInterface = $comboBox.SelectedItem
@@ -35,19 +35,19 @@ $buttonIPv4.Add_Click({
             $gateway = (Get-NetRoute -InterfaceAlias $selectedInterface -AddressFamily IPv4 | Where-Object { $_.DestinationPrefix -eq '0.0.0.0/0' }).NextHop
             $macAddress = (Get-NetAdapter -InterfaceAlias $selectedInterface).MacAddress
 
-            [System.Windows.Forms.MessageBox]::Show("Adresse IP : $ipAddress`nMasque de sous-réseau : $subnetMask`nPasserelle par défaut : $gateway`nAdresse MAC : $macAddress", "Informations IPv4 sur l'interface")
+            [System.Windows.Forms.MessageBox]::Show("IP Address : $ipAddress`nNetmask : $subnetMask`nDefault gateway : $gateway`nMAC Address : $macAddress", "IPv4 informations of this network interface")
         } else {
-            [System.Windows.Forms.MessageBox]::Show("L'interface sélectionnée n'a pas d'adresse IPv4.", "Aucune adresse IPv4")
+            [System.Windows.Forms.MessageBox]::Show("Selected interface has no IPv4 address.", "IPv4 address not found")
         }
     } else {
-        [System.Windows.Forms.MessageBox]::Show("Veuillez sélectionner une interface.", "Erreur")
+        [System.Windows.Forms.MessageBox]::Show("Select a network interface.", "Error")
     }
 })
 
-# Bouton pour afficher les informations IPv6
+# Button to display IPv6 informations
 $buttonIPv6 = New-Object Windows.Forms.Button
 $buttonIPv6.Location = New-Object Drawing.Point(260, 100)
-$buttonIPv6.Text = "Afficher les informations IPv6"
+$buttonIPv6.Text = "Show IPv6 informations"
 $buttonIPv6.AutoSize = $true
 $buttonIPv6.Add_Click({
     $selectedInterface = $comboBox.SelectedItem
@@ -60,12 +60,12 @@ $buttonIPv6.Add_Click({
             $gateway = (Get-NetRoute -InterfaceAlias $selectedInterface -AddressFamily IPv6 | Where-Object { $_.DestinationPrefix -eq '::/0' }).NextHop
             $macAddress = (Get-NetAdapter -InterfaceAlias $selectedInterface).MacAddress
 
-            [System.Windows.Forms.MessageBox]::Show("Adresse IP : $ipAddress`nMasque de sous-réseau : $subnetMask`nPasserelle par défaut : $gateway`nAdresse MAC : $macAddress", "Informations IPv6 sur l'interface")
+            [System.Windows.Forms.MessageBox]::Show("IP Address : $ipAddress`nNetmask : $subnetMask`nDefault gateway : $gateway`nMAC Address : $macAddress", "IPv6 informations of this network interface")
         } else {
-            [System.Windows.Forms.MessageBox]::Show("L'interface sélectionnée n'a pas d'adresse IPv6.", "Aucune adresse IPv6")
+            [System.Windows.Forms.MessageBox]::Show("Selected interface has no IPv6 address.", "IPv6 address not found")
         }
     } else {
-        [System.Windows.Forms.MessageBox]::Show("Veuillez sélectionner une interface.", "Erreur")
+        [System.Windows.Forms.MessageBox]::Show("Please select a network interface.", "Error")
     }
 })
 
